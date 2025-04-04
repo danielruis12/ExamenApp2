@@ -52,6 +52,26 @@ namespace EXAMEN2.Clases
                 .ToList();
         }
 
+        public List<object> ConsultarPesajesPorPlaca(string placa)
+        {
+            var resultado = (from pesaje in dbExamen.Pesajes
+                             join camion in dbExamen.Camions on pesaje.PlacaCamion equals camion.Placa
+                             where camion.Placa == placa
+                             select new
+                             {
+                                 Placa = camion.Placa,
+                                 Marca = camion.Marca,
+                                 NumeroEjes = camion.NumeroEjes,
+                                 FechaPesaje = pesaje.FechaPesaje,
+                                 Peso = pesaje.Peso,
+                                 Imagenes = (from f in dbExamen.FotoPesajes
+                                             where f.idPesaje == pesaje.id
+                                             select f.ImagenVehiculo).ToList()
+                             }).ToList<object>();
+
+            return resultado;
+        }
+
         public string Eliminar()
         {
             try

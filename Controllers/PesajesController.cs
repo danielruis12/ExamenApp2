@@ -33,6 +33,15 @@ namespace EXAMEN2.Controllers
             return servicio.Consultar(id);
         }
 
+        [HttpGet]
+        [Route("ConsultarPorPlaca")]
+        public List<object> ConsultarPorPlaca(string placa)
+        {
+            clsPesaje servicio = new clsPesaje();
+            return servicio.ConsultarPesajesPorPlaca(placa);
+        }
+
+
         [HttpPost]
         [Route("Insertar")]
         public string Insertar([FromBody] Pesaje pesaje)
